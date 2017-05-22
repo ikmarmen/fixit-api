@@ -23,6 +23,7 @@ const apiReady = function () {
   app.use(require('./middlewares/auth'));
 
   app.use('/startup', require('./routes/startup'));
+  app.use('/user', require('./routes/user'));
 
   app.use(function (req, res, next) {
     if (typeof res.payload !== 'undefined') {
