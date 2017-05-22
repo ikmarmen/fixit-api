@@ -1,0 +1,38 @@
+{
+	"variables": [],
+	"info": {
+		"name": "FixIt",
+		"_postman_id": "e5102b07-5f2b-8436-326e-be6a9c33ff82",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/startup",
+			"request": {
+				"url": "{{host}}/startup",
+				"method": "GET",
+				"header": [
+					{
+						"key": "uuid",
+						"value": "123456789",
+						"description": ""
+					},
+					{
+						"key": "app-version",
+						"value": "1.0.0",
+						"description": ""
+					},
+					{
+						"key": "platform",
+						"value": "android",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
