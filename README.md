@@ -10,7 +10,7 @@
 ### Setup Postman
 Download [Postman](https://www.getpostman.com/) (if you don't have it).  
 Import postman environment and collections files.  
-`./postman/fixit-dev.postman_environment.json` to configure dev environment.
+`./postman/fixit-dev.postman_environment.json` to configure dev environment.  
 `./postman/FixIt.postman_collection.json` to import an available API endpoints  
 
 
