@@ -33,6 +33,60 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "/user",
+			"request": {
+				"url": "{{host}}/user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "uuid",
+						"value": "123456789",
+						"description": ""
+					},
+					{
+						"key": "app-version",
+						"value": "1.0.0",
+						"description": ""
+					},
+					{
+						"key": "platform",
+						"value": "android",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "firstName",
+							"value": "Ankap",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Ankapyan",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "email",
+							"value": "ankap@ankapyan.com",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
