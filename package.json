@@ -18,12 +18,14 @@
   },
   "homepage": "https://github.com/arsen/fixit-api#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "extend": "^3.0.1",
     "lodash": "^4.17.4",
     "mongoose": "^4.10.1",
+    "mongoose-unique-validator": "^1.0.5",
     "morgan": "^1.8.1",
     "validator": "^7.0.0"
   },

@@ -13,10 +13,11 @@ router.post('/', (req, res, next) => {
   let user = new User(req.body);
   user.save((err, result) => {
     if (err) {
+      console.log(err.errors);
       next(new Error(err));
     }
     else {
-      res.payload = "User created";
+      res.payload = result;
       next();
     }
   });

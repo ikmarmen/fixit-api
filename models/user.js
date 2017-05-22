@@ -1,5 +1,9 @@
 const validator = require('validator');
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
+const bcrypt = require('bcrypt');
+
+const SALT_WORK_FACTOR = 9;
 
 const userSchema = mongoose.Schema({
   email: {
@@ -11,6 +15,12 @@ const userSchema = mongoose.Schema({
       message: '{VALUE} is not a valid email address'
     },
     required: [true, 'Email address is required']
+  },
+
+  password: {
+    type: String,
+    minlength: 5,
+    required: [true, 'Password is required']
   },
 
   firstName: {
@@ -34,7 +44,7 @@ const userSchema = mongoose.Schema({
   lastActiveAt: {
     type: Date,
     required: true,
-    default: new Date(),    
+    default: new Date(),
   },
 
   registeredAt: {
@@ -43,5 +53,37 @@ const userSchema = mongoose.Schema({
     default: new Date(),
   },
 });
+
+userSchema.pre('save', function (next) {
+  let user = this;
+
+  if (!user.isModified('password')) {
+    return next();
+  }
+
+  bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+    if (err) {
+      return next(err);
+    }
+    bcrypt.hash(user.password, salt, function (err, hash) {
+      if (err) {
+        return next(err);
+      }
+      user.password = hash;
+      next();
+    });
+  });
+});
+
+userSchema.methods.comparePassword = function (candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+    if (err) {
+      return cb(err);
+    }
+    cb(null, isMatch);
+  });
+};
+
+userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('User', userSchema, 'users');
