@@ -4,14 +4,14 @@ const validateRequest = function (req, res, next) {
   let appVersion = req.headers['app-version'];
   let regex = /^\d+\.\d+\.\d+$/g;
   appVersion = regex.test(appVersion) ? appVersion : false;
-  let uuid = req.headers.uuid;
+  let deviceId = req.headers['device-id'];
   let platform = req.headers.platform;
 
-  // console.log(uuid, appVersion, platform);
+  // console.log(deviceId, appVersion, platform);
   let errors = [];
 
-  if (typeof uuid == 'undefined' || uuid === '') {
-    errors.push('uuid');
+  if (typeof deviceId == 'undefined' || deviceId === '') {
+    errors.push('deviceId');
   }
   if (!appVersion) {
     errors.push('appVersion');
@@ -26,7 +26,7 @@ const validateRequest = function (req, res, next) {
     next(err);
   } else {
     req.appVersion = appVersion;
-    req.uuid = uuid;
+    req.deviceId = deviceId;
     req.platform = platform;
     next();
   }

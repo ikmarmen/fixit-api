@@ -2,6 +2,8 @@ const validator = require('validator');
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 const SALT_WORK_FACTOR = 9;
 
@@ -35,6 +37,11 @@ const userSchema = mongoose.Schema({
   },
 
   profilePic: Buffer,
+
+  tokens: {
+    type: [],
+    index: true,
+  },
 
   social: {
     facebook: String,
@@ -76,15 +83,39 @@ userSchema.pre('save', function (next) {
   });
 });
 
-userSchema.methods.comparePassword = function (candidatePassword, cb) {
+userSchema.methods.comparePassword = function (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
     if (err) {
-      return cb(err);
+      return callback(err);
     }
-    cb(null, isMatch);
+    callback(null, isMatch);
   });
+};
+
+userSchema.methods.createToken = function (deviceId) {
+  let token = jwt.sign({
+    usderId: this._id,
+  }, config.tokenSecret, {
+      audience: deviceId
+    });
+  this.tokens.push(token);
+  return token;
+};
+
+userSchema.methods.isTokenValid = function (token, deviceId) {
+  try {
+    let tokenData = jwt.verify(token, config.tokenSecret, { audience: deviceId });
+    return this.tokens.indexOf(token) !== -1;
+  }
+  catch (err) {
+    return false;
+  }
+};
+
+userSchema.statics.findByToken = function (token, cb) {
+  return this.findOne({ tokens: {$in: [token]} }, cb);
 };
 
 userSchema.plugin(uniqueValidator);
 
-module.exports = mongoose.model('User', userSchema, 'users');
+module.exports = mongoose.model('User', userSchema, 'users'); 
