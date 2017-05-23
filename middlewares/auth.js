@@ -4,13 +4,10 @@ const User = require('../models/user');
 
 module.exports = (req, res, next) => {
   if (req.headers.token) {
-    User.findByToken(req.headers.token, (err, userInfo) => {
-      req.user = userInfo;
-      console.log('userInfo', userInfo);
-      // delete userInfo.password;
-      // delete userInfo.__v;
-      // delete userInfo.tokens;
-      // Object.assign(req.user, userInfo);
+    User.findByToken(req.headers.token, (err, user) => {
+      if (user && user.isTokenValid(req.headers.token, req.deviceId)) {
+        req.user = Object.assign({}, user.toJSON());
+      }
       next();
     });
   } else {
