@@ -8,14 +8,19 @@
 	},
 	"item": [
 		{
-			"name": "/startup",
+			"name": "Startup",
 			"request": {
 				"url": "{{host}}/startup",
 				"method": "GET",
 				"header": [
 					{
-						"key": "uuid",
-						"value": "123456789",
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NjUxNzAwLCJhdWQiOiIxMjM0NTY3ODkxIn0.bqGPLFQpm91L0YREdIjl8D_xfCnFIA3KYxCbU79OOvk",
+						"description": ""
+					},
+					{
+						"key": "device-id",
+						"value": "1234567891",
 						"description": ""
 					},
 					{
@@ -35,13 +40,13 @@
 			"response": []
 		},
 		{
-			"name": "/user",
+			"name": "Register",
 			"request": {
 				"url": "{{host}}/user",
 				"method": "POST",
 				"header": [
 					{
-						"key": "uuid",
+						"key": "device-id",
 						"value": "123456789",
 						"description": ""
 					},
@@ -78,7 +83,66 @@
 						},
 						{
 							"key": "email",
-							"value": "ankap@ankapyan.com",
+							"value": "ankap1@ankapyan.com",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "aaa123",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"url": "{{host}}/user/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NTI1NDMxLCJhdWQiOiIxMjM0NTY3ODkifQ.h1YAUuTPeMRGFl4yZRNK5K6L8bbo93aulyb3YmGzmcs",
+						"description": ""
+					},
+					{
+						"key": "device-id",
+						"value": "1234567891",
+						"description": ""
+					},
+					{
+						"key": "app-version",
+						"value": "1.0.0",
+						"description": ""
+					},
+					{
+						"key": "platform",
+						"value": "android",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "ankap1@ankapyan.com",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "aaa123",
 							"type": "text",
 							"enabled": true
 						}

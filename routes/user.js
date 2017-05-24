@@ -13,12 +13,12 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
   res.payload = {
-    login: false
+    token: false
   };
   User.login(req.body.email, req.body.password, req.deviceId)
     .then((token) => {
       res.payload = {
-        login: token
+        token: token
       };
     })
     .finally(() => next());
