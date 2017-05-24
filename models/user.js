@@ -84,21 +84,11 @@ userSchema.pre('save', function (next) {
   });
 });
 
-userSchema.methods.comparePassword = function (candidatePassword, deviceId) {
+userSchema.methods.comparePassword = function (candidatePassword) {
   let user = this;
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidatePassword, this.password, (err, ok) => {
-      if (ok) {
-        // let token = user.createToken();
-        user.createToken(deviceId).then((newToken) => {
-          resolve(newToken);
-        })
-        .catch(() => reject(false));
-      }
-      else {
-        reject(false);
-      }
-      // ok ? resolve() : reject(false);
+      ok ? resolve() : reject();
     });
   });
 };
@@ -149,10 +139,16 @@ userSchema.statics.findByToken = function (token) {
   return this.findOne({ tokens: { $in: [token] } });
 };
 
-userSchema.statics.login = function (email, password, devcieId) {
+userSchema.statics.login = function (email, password, deviceId) {
   return this.findOne({ email: email })
     .then((user) => {
-      return user ? user.comparePassword(password, devcieId) : false;
+      if (user) {
+        return user.comparePassword(password)
+          .then(() => user.createToken(deviceId));
+      }
+      else {
+        return false;
+      }
     });
 };
 
