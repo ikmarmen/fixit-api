@@ -6,6 +6,7 @@ const app = express();
 
 const config = require('./config');
 
+global.Promise = require('bluebird');
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongoUrl);
 mongoose.connection.on('error', () => console.error('connection error'));

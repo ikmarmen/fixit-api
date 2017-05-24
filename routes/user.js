@@ -11,6 +11,20 @@ router.get('/:id', (req, res, next) => {
 });
 
 
+router.post('/login', (req, res, next) => {
+  res.payload = {
+    login: false
+  };
+  User.login(req.body.email, req.body.password, req.deviceId)
+    .then((token) => {
+      res.payload = {
+        login: token
+      };
+    })
+    .finally(() => next());
+});
+
+
 //creating a new user
 router.post('/', (req, res, next) => {
   let user = new User(req.body);
@@ -26,7 +40,7 @@ router.post('/', (req, res, next) => {
       next();
     }
   });
-  
+
 });
 
 

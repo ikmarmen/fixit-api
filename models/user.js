@@ -1,3 +1,4 @@
+const Promise = require('bluebird');
 const validator = require('validator');
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
@@ -22,7 +23,6 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     minlength: 5,
-    maxlength: 50,
     required: [true, 'Password is required']
   },
 
@@ -69,6 +69,7 @@ userSchema.pre('save', function (next) {
     return next();
   }
 
+
   bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
     if (err) {
       return next(err);
@@ -83,23 +84,55 @@ userSchema.pre('save', function (next) {
   });
 });
 
-userSchema.methods.comparePassword = function (candidatePassword, callback) {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-    if (err) {
-      return callback(err);
-    }
-    callback(null, isMatch);
+userSchema.methods.comparePassword = function (candidatePassword, deviceId) {
+  let user = this;
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(candidatePassword, this.password, (err, ok) => {
+      if (ok) {
+        // let token = user.createToken();
+        user.createToken(deviceId).then((newToken) => {
+          resolve(newToken);
+        })
+        .catch(() => reject(false));
+      }
+      else {
+        reject(false);
+      }
+      // ok ? resolve() : reject(false);
+    });
   });
 };
 
 userSchema.methods.createToken = function (deviceId) {
-  let token = jwt.sign({
-    usderId: this._id,
-  }, config.tokenSecret, {
-      audience: deviceId
+  let user = this;
+  return new Promise((resolve, reject) => {
+    let newToken = jwt.sign({
+      usderId: user._id,
+    }, config.tokenSecret, {
+        audience: deviceId
+      });
+
+    let foundToken = false;
+    for (let i = 0; i < user.tokens.length; i++) {
+      let tokenData = jwt.verify(user.tokens[i], config.tokenSecret);
+      if (tokenData['aud'] && tokenData['aud'] === deviceId) {
+        foundToken = i;
+        break;
+      }
+    }
+
+    if (foundToken !== false) {
+      user.tokens[foundToken] = newToken;
+    }
+    else {
+      user.tokens.push(newToken);
+    }
+
+    user.save((err) => {
+      !err ? resolve(newToken) : reject(err);
     });
-  this.tokens.push(token);
-  return token;
+
+  });
 };
 
 userSchema.methods.isTokenValid = function (token, deviceId) {
@@ -112,8 +145,15 @@ userSchema.methods.isTokenValid = function (token, deviceId) {
   }
 };
 
-userSchema.statics.findByToken = function (token, cb) {
-  return this.findOne({ tokens: {$in: [token]} }, cb);
+userSchema.statics.findByToken = function (token) {
+  return this.findOne({ tokens: { $in: [token] } });
+};
+
+userSchema.statics.login = function (email, password, devcieId) {
+  return this.findOne({ email: email })
+    .then((user) => {
+      return user ? user.comparePassword(password, devcieId) : false;
+    });
 };
 
 userSchema.plugin(uniqueValidator);
