@@ -12,13 +12,14 @@ const imageJob = (buffer, callback) => {
     img
       .resize(size.width / 2, size.height / 2)
       .noProfile()
+      .compress('JPEG')
       .toBuffer('JPEG', (err, buffer) => {
         err ? callback(err) : callback(null, buffer);
       });
   });
 };
 
-const saveImages = (files) => {
+const processImages = (files) => {
   return new Promise((resolve, reject) => {
     let jobs = [];
     for (let i = 0; i < files.length; i++) {
@@ -40,13 +41,13 @@ const saveImages = (files) => {
 router.post('/', fileUpload.array("photos", 10), (req, res, next) => {
   res.payload = req.body;
 
-  saveImages(req.files)
+  processImages(req.files)
     .then((result) => {
-      console.log('save done', result);
-      const fs = require('fs');
-      // saving to disk for testing
+      // console.log('save done', result);
+      // const fs = require('fs');
+      // // saving to disk for testing
       // result.map((item, index) => {
-      //   fs.writeFileSync('./img_'+index+'.jpg', item);
+      //   fs.writeFileSync('./img___'+index+'.jpg', item);
       // });
       next();
     })
