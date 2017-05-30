@@ -110,7 +110,6 @@ userSchema.methods.createToken = function (deviceId) {
         break;
       }
     }
-
     if (foundToken !== false) {
       user.tokens[foundToken] = newToken;
     }
@@ -119,6 +118,7 @@ userSchema.methods.createToken = function (deviceId) {
     }
 
     user.save((err) => {
+      console.log('token update done', err);
       !err ? resolve(newToken) : reject(err);
     });
 

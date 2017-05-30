@@ -12,6 +12,7 @@ router.get('/:id', (req, res, next) => {
 
 
 router.post('/login', (req, res, next) => {
+  console.log(req.body, req.files);
   res.payload = {
     token: false
   };

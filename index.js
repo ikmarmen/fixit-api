@@ -26,6 +26,7 @@ const apiReady = function () {
 
   app.use('/startup', require('./routes/startup'));
   app.use('/user', require('./routes/user'));
+  app.use('/posts', require('./routes/posts'));
 
   app.use(function (req, res, next) {
     if (typeof res.payload !== 'undefined') {
