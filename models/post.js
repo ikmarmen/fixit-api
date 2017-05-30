@@ -8,6 +8,14 @@ const photoScheme = mongoose.Schema({
   height: Number,
 });
 
+const addressScheme = mongoose.Scheme({
+  street:  String,
+  city: String,
+  state: String,
+  country: String,
+  zip: Number,
+});
+
 const postScheme = mongoose.Schema({
   title: {
     type: String,
@@ -21,6 +29,17 @@ const postScheme = mongoose.Schema({
     type: String,
     index: true,
     maxlength: 500,
+  },
+
+  //geospatial index (https://docs.mongodb.com/manual/applications/geospatial-indexes/)
+  loc: {
+    type: [Number], // [longitude, latitude]
+    index: '2d',
+  },
+
+  address: {
+    type: addressScheme,
+    required: true,
   },
 
   photos: [photoScheme],
