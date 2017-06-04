@@ -1,156 +1,218 @@
 {
-	"variables": [],
-	"info": {
-		"name": "FixIt",
-		"_postman_id": "e5102b07-5f2b-8436-326e-be6a9c33ff82",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-	},
-	"item": [
+	"id": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+	"name": "FixIt",
+	"description": "",
+	"order": [
+		"4049a201-d424-aab9-f6c4-78de952de8db",
+		"6818aea0-a548-06d2-2e45-cb8e52a04b4c",
+		"9b11a6fe-b9c6-fcfb-2189-2eda3095dfe4",
+		"0aa09a25-8579-efd8-f9c8-77823add150c",
+		"131925a6-38c5-bd37-a46e-09c48d037b3c"
+	],
+	"folders": [],
+	"timestamp": 0,
+	"owner": "2141999",
+	"public": false,
+	"requests": [
 		{
+			"id": "0aa09a25-8579-efd8-f9c8-77823add150c",
+			"headers": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NjUxNzAwLCJhdWQiOiIxMjM0NTY3ODkxIn0.bqGPLFQpm91L0YREdIjl8D_xfCnFIA3KYxCbU79OOvk\ndevice-id: 1234567891\napp-version: 1.0.0\nplatform: android\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NjUxNzAwLCJhdWQiOiIxMjM0NTY3ODkxIn0.bqGPLFQpm91L0YREdIjl8D_xfCnFIA3KYxCbU79OOvk",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "device-id",
+					"value": "1234567891",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "app-version",
+					"value": "1.0.0",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "platform",
+					"value": "android",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{host}}/user/5933fe87c148d3163cef2751",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496585504708,
+			"name": "Get User",
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+			"responses": []
+		},
+		{
+			"id": "131925a6-38c5-bd37-a46e-09c48d037b3c",
+			"headers": "device-id: 123456789\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "device-id",
+					"value": "123456789",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "app-version",
+					"value": "1.0.0",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "platform",
+					"value": "android",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{host}}/user/save",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "firstName",
+					"value": "AnkapUpdated3",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "lastName",
+					"value": "AnkapyanUpdated3",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "ankap4@ankapyan.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "aaa123",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "_id",
+					"value": "5933fe87c148d3163cef2751",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496585539707,
+			"name": "Update User",
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+			"responses": []
+		},
+		{
+			"id": "4049a201-d424-aab9-f6c4-78de952de8db",
 			"name": "Startup",
-			"request": {
-				"url": "{{host}}/startup",
-				"method": "GET",
-				"header": [
-					{
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NjUxNzAwLCJhdWQiOiIxMjM0NTY3ODkxIn0.bqGPLFQpm91L0YREdIjl8D_xfCnFIA3KYxCbU79OOvk",
-						"description": ""
-					},
-					{
-						"key": "device-id",
-						"value": "1234567891",
-						"description": ""
-					},
-					{
-						"key": "app-version",
-						"value": "1.0.0",
-						"description": ""
-					},
-					{
-						"key": "platform",
-						"value": "android",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
-			},
-			"response": []
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+			"method": "GET",
+			"headers": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NjUxNzAwLCJhdWQiOiIxMjM0NTY3ODkxIn0.bqGPLFQpm91L0YREdIjl8D_xfCnFIA3KYxCbU79OOvk\ndevice-id: 1234567891\napp-version: 1.0.0\nplatform: android",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{host}}/startup",
+			"responses": []
 		},
 		{
+			"id": "6818aea0-a548-06d2-2e45-cb8e52a04b4c",
 			"name": "Register",
-			"request": {
-				"url": "{{host}}/user",
-				"method": "POST",
-				"header": [
-					{
-						"key": "device-id",
-						"value": "123456789",
-						"description": ""
-					},
-					{
-						"key": "app-version",
-						"value": "1.0.0",
-						"description": ""
-					},
-					{
-						"key": "platform",
-						"value": "android",
-						"description": ""
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "firstName",
-							"value": "Ankap",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "lastName",
-							"value": "Ankapyan",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "email",
-							"value": "ankap1@ankapyan.com",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "password",
-							"value": "aaa123",
-							"type": "text",
-							"enabled": true
-						}
-					]
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+			"method": "POST",
+			"headers": "device-id: 123456789\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded",
+			"dataMode": "urlencoded",
+			"data": [
+				{
+					"key": "firstName",
+					"value": "Ankap",
+					"type": "text",
+					"enabled": true
 				},
-				"description": ""
-			},
-			"response": []
+				{
+					"key": "lastName",
+					"value": "Ankapyan",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "ankap1@ankapyan.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "aaa123",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"rawModeData": "",
+			"url": "{{host}}/user",
+			"responses": []
 		},
 		{
+			"id": "9b11a6fe-b9c6-fcfb-2189-2eda3095dfe4",
 			"name": "Login",
-			"request": {
-				"url": "{{host}}/user/login",
-				"method": "POST",
-				"header": [
-					{
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NTI1NDMxLCJhdWQiOiIxMjM0NTY3ODkifQ.h1YAUuTPeMRGFl4yZRNK5K6L8bbo93aulyb3YmGzmcs",
-						"description": ""
-					},
-					{
-						"key": "device-id",
-						"value": "1234567891",
-						"description": ""
-					},
-					{
-						"key": "app-version",
-						"value": "1.0.0",
-						"description": ""
-					},
-					{
-						"key": "platform",
-						"value": "android",
-						"description": ""
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "email",
-							"value": "ankap1@ankapyan.com",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "password",
-							"value": "aaa123",
-							"type": "text",
-							"enabled": true
-						}
-					]
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+			"method": "POST",
+			"headers": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NTI1NDMxLCJhdWQiOiIxMjM0NTY3ODkifQ.h1YAUuTPeMRGFl4yZRNK5K6L8bbo93aulyb3YmGzmcs\ndevice-id: 1234567891\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded",
+			"dataMode": "urlencoded",
+			"data": [
+				{
+					"key": "email",
+					"value": "ankap1@ankapyan.com",
+					"type": "text",
+					"enabled": true
 				},
-				"description": ""
-			},
-			"response": []
+				{
+					"key": "password",
+					"value": "aaa123",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"rawModeData": "",
+			"url": "{{host}}/user/login",
+			"responses": []
 		}
 	]
 }

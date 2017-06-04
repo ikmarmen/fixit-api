@@ -8,7 +8,7 @@ const photoScheme = mongoose.Schema({
   height: Number,
 });
 
-const addressScheme = mongoose.Scheme({
+const addressScheme = mongoose.Schema({
   street:  String,
   city: String,
   state: String,
