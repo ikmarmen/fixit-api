@@ -14,7 +14,7 @@ const addressScheme = mongoose.Schema({
     state: String,
     country: String,
     zip: Number,
-});
+});;
 
 const bidScheme = mongoose.Schema({
     price: {
@@ -52,7 +52,7 @@ const commentSchema = mongoose.Schema({
         ref: 'User'
     },
     replies: [
-        { type: Schema.ObjectId, ref: 'Person' }
+        { type: mongoose.Schema.ObjectId, ref: 'Person' }
     ],
     createdAt: {
         type: Date,
@@ -115,3 +115,5 @@ const postScheme = mongoose.Schema({
         default: new Date(),
     }
 });
+
+module.exports = mongoose.model('Post', postScheme, 'posts'); 
