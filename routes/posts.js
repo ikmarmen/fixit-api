@@ -3,6 +3,7 @@ const multer = require('multer');
 const Post = require('../models/post');
 const async = require('async');
 const gm = require('gm');
+const requireAuth = require('../middlewares/require-auth');
 
 const fileUpload = multer();
 
@@ -10,11 +11,13 @@ const imageJob = (buffer, callback) => {
     let img = gm(buffer);
     img.size((err, size) => {
         if (!err) {
+            let width = size.width / 2,
+                height = size.height / 2;
             img.resize(size.width / 2, size.height / 2)
                 .noProfile()
                 .compress('JPEG')
                 .toBuffer('JPEG', (err, buffer) => {
-                    err ? callback(err) : callback(null, buffer);
+                    err ? callback(err) : callback(null, { data: buffer, height: height, width: width });
                 });
         } else {
             callback(err)
@@ -41,11 +44,12 @@ const processImages = (files) => {
 
 };
 
-router.post('/', fileUpload.array("photos", 10), (req, res, next) => {
+router.post('/', fileUpload.array("photos", 10), requireAuth, (req, res, next) => {
     processImages(req.files)
         .then((result) => {
-            let postData = Object.assign({}, req.body, {photos:result});
+            let postData = Object.assign({}, req.body, { userId: req.user._id, photos: result });
             let post = new Post(postData)
+
             post.save((err, result) => {
                 if (err) {
                     console.log(err.errors);
@@ -62,6 +66,30 @@ router.post('/', fileUpload.array("photos", 10), (req, res, next) => {
             next();
         });
 
+});
+
+router.get('/:id', requireAuth, (req, res, next) => {
+    Post.findById(req.params['id'])
+        .then((post) => {
+            res.payload = post
+            next()
+        })
+        .catch(err => {
+            console.log(err.errors);
+            next(new Error(err));
+        });
+});
+
+router.post('/:id/bid', requireAuth, (req, res, next) => {
+    Post.addBid(req.params['id'], req.body)
+        .then((post) => {
+            res.payload = post;
+            next();
+        })
+        .catch(err => {
+            console.log(err.errors);
+            next(new Error(err));
+        });
 });
 
 module.exports = router;

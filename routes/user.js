@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const User = require('../models/user');
+const requireAuth = require('../middlewares/require-auth');
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', requireAuth, (req, res, next) => {
     User.findById(req.params['id'])
         .then((user) => {
             res.payload = {
@@ -48,7 +49,7 @@ router.post('/', (req, res, next) => {
 });
 
 //updating existing user
-router.post('/save', (req, res, next) => {
+router.post('/save', requireAuth, (req, res, next) => {
     User.findById(req.body._id)
         .then((user) => {
             user = Object.assign(user, req.body);
@@ -64,8 +65,6 @@ router.post('/save', (req, res, next) => {
         });
 
 });
-
-
 
 module.exports = router;
 

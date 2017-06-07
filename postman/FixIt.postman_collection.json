@@ -7,7 +7,10 @@
 		"6818aea0-a548-06d2-2e45-cb8e52a04b4c",
 		"9b11a6fe-b9c6-fcfb-2189-2eda3095dfe4",
 		"0aa09a25-8579-efd8-f9c8-77823add150c",
-		"131925a6-38c5-bd37-a46e-09c48d037b3c"
+		"131925a6-38c5-bd37-a46e-09c48d037b3c",
+		"8e5c2e56-2005-1eef-a765-b3c166caf86f",
+		"8df1c5bd-f8ca-0d6d-0319-0fc5c434cbba",
+		"5802c8e7-ca63-827e-2844-9c85b40e429d"
 	],
 	"folders": [],
 	"timestamp": 0,
@@ -16,17 +19,17 @@
 	"requests": [
 		{
 			"id": "0aa09a25-8579-efd8-f9c8-77823add150c",
-			"headers": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NjUxNzAwLCJhdWQiOiIxMjM0NTY3ODkxIn0.bqGPLFQpm91L0YREdIjl8D_xfCnFIA3KYxCbU79OOvk\ndevice-id: 1234567891\napp-version: 1.0.0\nplatform: android\n",
+			"headers": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODI0OTk2LCJhdWQiOiIxMjM0NTY3ODkifQ.QSRs65nihfWceLpLPa3-v7N6pzWCbYoE1S0p4DLCTPg\ndevice-id: 123456789\napp-version: 1.0.0\nplatform: android\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NjUxNzAwLCJhdWQiOiIxMjM0NTY3ODkxIn0.bqGPLFQpm91L0YREdIjl8D_xfCnFIA3KYxCbU79OOvk",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODI0OTk2LCJhdWQiOiIxMjM0NTY3ODkifQ.QSRs65nihfWceLpLPa3-v7N6pzWCbYoE1S0p4DLCTPg",
 					"description": "",
 					"enabled": true
 				},
 				{
 					"key": "device-id",
-					"value": "1234567891",
+					"value": "123456789",
 					"description": "",
 					"enabled": true
 				},
@@ -43,7 +46,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{host}}/user/5933fe87c148d3163cef2751",
+			"url": "{{host}}/user/5937b52b6f273c2bcc408e70",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -54,7 +57,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496585504708,
+			"time": 1496825055246,
 			"name": "Get User",
 			"description": "",
 			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
@@ -62,7 +65,7 @@
 		},
 		{
 			"id": "131925a6-38c5-bd37-a46e-09c48d037b3c",
-			"headers": "device-id: 123456789\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded\n",
+			"headers": "device-id: 123456789\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded\ntoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2I1MmI2ZjI3M2MyYmNjNDA4ZTcwIiwiaWF0IjoxNDk2ODIzMDk3LCJhdWQiOiIxMjM0NTY3ODkxIn0.0yr3BYRIgyJ4mhKwxBpFUAR3VhPCeWuvIB0thvhGG_Q\n",
 			"headerData": [
 				{
 					"key": "device-id",
@@ -85,6 +88,12 @@
 				{
 					"key": "Content-Type",
 					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2I1MmI2ZjI3M2MyYmNjNDA4ZTcwIiwiaWF0IjoxNDk2ODIzMDk3LCJhdWQiOiIxMjM0NTY3ODkxIn0.0yr3BYRIgyJ4mhKwxBpFUAR3VhPCeWuvIB0thvhGG_Q",
 					"description": "",
 					"enabled": true
 				}
@@ -132,7 +141,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496585539707,
+			"time": 1496823178547,
 			"name": "Update User",
 			"description": "",
 			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
@@ -140,14 +149,122 @@
 		},
 		{
 			"id": "4049a201-d424-aab9-f6c4-78de952de8db",
+			"headers": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODI0OTk2LCJhdWQiOiIxMjM0NTY3ODkifQ.QSRs65nihfWceLpLPa3-v7N6pzWCbYoE1S0p4DLCTPg\ndevice-id: 123456789\napp-version: 1.0.0\nplatform: android\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODI0OTk2LCJhdWQiOiIxMjM0NTY3ODkifQ.QSRs65nihfWceLpLPa3-v7N6pzWCbYoE1S0p4DLCTPg",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "device-id",
+					"value": "123456789",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "app-version",
+					"value": "1.0.0",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "platform",
+					"value": "android",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{host}}/startup",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496825024881,
 			"name": "Startup",
 			"description": "",
 			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
-			"method": "GET",
-			"headers": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NjUxNzAwLCJhdWQiOiIxMjM0NTY3ODkxIn0.bqGPLFQpm91L0YREdIjl8D_xfCnFIA3KYxCbU79OOvk\ndevice-id: 1234567891\napp-version: 1.0.0\nplatform: android",
-			"data": [],
-			"rawModeData": "",
-			"url": "{{host}}/startup",
+			"responses": []
+		},
+		{
+			"id": "5802c8e7-ca63-827e-2844-9c85b40e429d",
+			"headers": "device-id: 0123456789\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded\ntoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE\n",
+			"headerData": [
+				{
+					"key": "device-id",
+					"value": "0123456789",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "app-version",
+					"value": "1.0.0",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "platform",
+					"value": "android",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{host}}/posts/5937e8eac9f3042a240316be/bid",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "comment",
+					"value": "Test comment",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "userId",
+					"value": "5937bca402915f1068296a5e",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "price",
+					"value": "120 $",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496845659336,
+			"name": "Bid",
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
 			"responses": []
 		},
 		{
@@ -189,13 +306,195 @@
 			"responses": []
 		},
 		{
-			"id": "9b11a6fe-b9c6-fcfb-2189-2eda3095dfe4",
-			"name": "Login",
+			"id": "8df1c5bd-f8ca-0d6d-0319-0fc5c434cbba",
+			"headers": "device-id: 0123456789\napp-version: 1.0.0\nplatform: android\ntoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE\n",
+			"headerData": [
+				{
+					"key": "device-id",
+					"value": "0123456789",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "app-version",
+					"value": "1.0.0",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "platform",
+					"value": "android",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{host}}/posts/5937b60c6f273c2bcc408e71",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496833100356,
+			"name": "Get Post",
 			"description": "",
 			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+			"responses": []
+		},
+		{
+			"id": "8e5c2e56-2005-1eef-a765-b3c166caf86f",
+			"headers": "device-id: 0123456789\napp-version: 1.0.0\nplatform: android\ntoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE\nContent-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "device-id",
+					"value": "0123456789",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "app-version",
+					"value": "1.0.0",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "platform",
+					"value": "android",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{host}}/posts",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
 			"method": "POST",
-			"headers": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkyM2U4Mzc1YTE3YWIyOGU0MTY1MmFmIiwiaWF0IjoxNDk1NTI1NDMxLCJhdWQiOiIxMjM0NTY3ODkifQ.h1YAUuTPeMRGFl4yZRNK5K6L8bbo93aulyb3YmGzmcs\ndevice-id: 1234567891\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded",
-			"dataMode": "urlencoded",
+			"data": [
+				{
+					"key": "photos",
+					"value": "dpblog.jpg",
+					"description": "",
+					"type": "file",
+					"enabled": true
+				},
+				{
+					"key": "title",
+					"value": "Test title",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "description",
+					"value": "Test description",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "loc[0]",
+					"value": "52.6895",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "loc[1]",
+					"value": "83.568",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "address[street]",
+					"value": "Abelyan 6/1",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "address[city]",
+					"value": "Yerevan",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "address[country]",
+					"value": "Armenia",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496845661414,
+			"name": "Post",
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+			"responses": []
+		},
+		{
+			"id": "9b11a6fe-b9c6-fcfb-2189-2eda3095dfe4",
+			"headers": "device-id: 0123456789\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "device-id",
+					"value": "0123456789",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "app-version",
+					"value": "1.0.0",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "platform",
+					"value": "android",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{host}}/user/login",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
 			"data": [
 				{
 					"key": "email",
@@ -210,8 +509,14 @@
 					"enabled": true
 				}
 			],
-			"rawModeData": "",
-			"url": "{{host}}/user/login",
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496833037817,
+			"name": "Login",
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
 			"responses": []
 		}
 	]
