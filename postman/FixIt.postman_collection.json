@@ -10,7 +10,9 @@
 		"131925a6-38c5-bd37-a46e-09c48d037b3c",
 		"8e5c2e56-2005-1eef-a765-b3c166caf86f",
 		"8df1c5bd-f8ca-0d6d-0319-0fc5c434cbba",
-		"5802c8e7-ca63-827e-2844-9c85b40e429d"
+		"5802c8e7-ca63-827e-2844-9c85b40e429d",
+		"56aa6825-ef42-c9b0-01a0-3c19a0925522",
+		"339c7096-3c64-af52-a196-9e6264ec7eea"
 	],
 	"folders": [],
 	"timestamp": 0,
@@ -148,6 +150,52 @@
 			"responses": []
 		},
 		{
+			"id": "339c7096-3c64-af52-a196-9e6264ec7eea",
+			"headers": "device-id: 0123456789\napp-version: 1.0.0\nplatform: android\ntoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE\n",
+			"headerData": [
+				{
+					"key": "device-id",
+					"value": "0123456789",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "app-version",
+					"value": "1.0.0",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "platform",
+					"value": "android",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{host}}/posts/5939577880014b08a830755d/comments",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496932484463,
+			"name": "Get Post Comments",
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+			"responses": []
+		},
+		{
 			"id": "4049a201-d424-aab9-f6c4-78de952de8db",
 			"headers": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODI0OTk2LCJhdWQiOiIxMjM0NTY3ODkifQ.QSRs65nihfWceLpLPa3-v7N6pzWCbYoE1S0p4DLCTPg\ndevice-id: 123456789\napp-version: 1.0.0\nplatform: android\n",
 			"headerData": [
@@ -194,6 +242,80 @@
 			"responses": []
 		},
 		{
+			"id": "56aa6825-ef42-c9b0-01a0-3c19a0925522",
+			"headers": "device-id: 0123456789\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded\ntoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE\n",
+			"headerData": [
+				{
+					"key": "device-id",
+					"value": "0123456789",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "app-version",
+					"value": "1.0.0",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "platform",
+					"value": "android",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{host}}/posts/5939577880014b08a830755d/comment",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "body",
+					"value": "Replay Comment1",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "parentId",
+					"value": "593957ea80014b08a8307565",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "postId",
+					"value": "5939577880014b08a830755d",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496931089603,
+			"name": "Comment",
+			"description": "",
+			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
+			"responses": []
+		},
+		{
 			"id": "5802c8e7-ca63-827e-2844-9c85b40e429d",
 			"headers": "device-id: 0123456789\napp-version: 1.0.0\nplatform: android\nContent-Type: application/x-www-form-urlencoded\ntoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2RlcklkIjoiNTkzN2JjYTQwMjkxNWYxMDY4Mjk2YTVlIiwiaWF0IjoxNDk2ODMzMDM5LCJhdWQiOiIwMTIzNDU2Nzg5In0.Z1k7c0ibvZCErV6kkReuNsqTvnOYbXkPNOiGfXUHPdE\n",
 			"headerData": [
@@ -228,7 +350,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{host}}/posts/5937e8eac9f3042a240316be/bid",
+			"url": "{{host}}/posts/5939577880014b08a830755d/bid",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -261,7 +383,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496845659336,
+			"time": 1496930194393,
 			"name": "Bid",
 			"description": "",
 			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
@@ -334,7 +456,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{host}}/posts/5937b60c6f273c2bcc408e71",
+			"url": "{{host}}/posts/5939577880014b08a830755d",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -345,7 +467,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496833100356,
+			"time": 1496930186304,
 			"name": "Get Post",
 			"description": "",
 			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
@@ -395,7 +517,7 @@
 			"data": [
 				{
 					"key": "photos",
-					"value": "dpblog.jpg",
+					"value": "",
 					"description": "",
 					"type": "file",
 					"enabled": true
@@ -454,7 +576,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496845661414,
+			"time": 1496930196265,
 			"name": "Post",
 			"description": "",
 			"collectionId": "2f5696e4-5b38-c6ab-2ced-e388d7cdd227",
