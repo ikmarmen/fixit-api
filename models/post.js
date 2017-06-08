@@ -31,30 +31,6 @@ const bidSchema = mongoose.Schema({
         default: new Date(),
     }
 });
-const commentSchema = mongoose.Schema({
-    body: {
-        type: String,
-        required: true
-    },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
-    },
-    replies: [
-        { type: mongoose.Schema.ObjectId, ref: 'Comment' }
-    ],
-    createdAt: {
-        type: Date,
-        required: true,
-        default: new Date(),
-    },
-    updatedAt: {
-        type: Date,
-        required: true,
-        default: new Date(),
-    }
-});
 const addressSchema = mongoose.Schema({
     street: String,
     city: String,
@@ -90,8 +66,6 @@ const postSchema = mongoose.Schema({
 
     photos: [photoSchema],
 
-    comments: [commentSchema],
-
     bids: [bidSchema],
 
     userId: {
@@ -114,7 +88,6 @@ const postSchema = mongoose.Schema({
 });
 
 var Address = mongoose.model('Address', addressSchema, 'addresses');
-var Comment = mongoose.model('Comment', commentSchema, 'comments');
 var Photo = mongoose.model('Photo', photoSchema, 'photos');
 var Bid = mongoose.model('Bid', bidSchema, 'bids');
 
