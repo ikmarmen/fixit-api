@@ -1,9 +1,8 @@
 const router = require('express').Router();
+const requireAuth = require('../middlewares/require-auth');
 
-
-router.get('/', (req, res, next) => {
+router.get('/', requireAuth, (req, res, next) => {
   res.payload = {
-    msg: "Hello from FixIt API",
     user: req.user,
   };
   next();
