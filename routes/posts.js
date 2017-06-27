@@ -69,6 +69,30 @@ router.post('/', fileUpload.array("photos", 10), requireAuth, (req, res, next) =
 
 });
 
+router.post('/all', (req, res, next) => {
+  Post.find({}, '_id title description createdAt bids photos._id')
+    .then((posts) => {
+      res.payload = posts
+      next()
+    })
+    .catch(err => {
+      console.log(err.errors);
+      next(new Error(err));
+    });
+});
+
+router.get('/photo/:id', (req, res, next) => {
+  Post.find({'photos._id':req.params['id'] }, {'photos.$': 1}, 'photos.data, photos._id')
+    .then((posts) => {
+      res.payload = posts[0].photos[0].data
+      next()
+    })
+    .catch(err => {
+      console.log(err.errors);
+      next(new Error(err));
+    });
+});
+
 router.get('/:id', requireAuth, (req, res, next) => {
   Post.findById(req.params['id'])
     .then((post) => {
