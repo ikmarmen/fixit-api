@@ -10,14 +10,16 @@ const validateRequest = function (req, res, next) {
   // console.log(deviceId, appVersion, platform);
   let errors = [];
 
-  if (typeof deviceId == 'undefined' || deviceId === '') {
-    errors.push('deviceId');
-  }
-  if (!appVersion) {
-    errors.push('appVersion');
-  }
-  if (!config.platforms[platform]) {
-    errors.push('platform');
+  if (req.originalUrl.indexOf('posts/photo/') === -1) {
+    if (typeof deviceId == 'undefined' || deviceId === '') {
+      errors.push('deviceId');
+    }
+    if (!appVersion) {
+      errors.push('appVersion');
+    }
+    if (!config.platforms[platform]) {
+      errors.push('platform');
+    }
   }
 
   if (errors.length > 0) {
