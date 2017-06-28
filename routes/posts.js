@@ -45,6 +45,23 @@ const processImages = (files) => {
 
 };
 
+const postsToModel = (results) => {
+  let posts = [];
+    results.forEach(function(doc) {
+        posts.push({
+            _id:  doc.obj._id,
+            title: doc.obj.title,
+            description: doc.obj.description,
+            createdAt: doc.obj.createdAt,
+            bids: doc.obj.bids,
+            photos: doc.obj.photos.map((photo)=>{return { _id: photo._id}}),
+            distance: parseInt(doc.dis/1000), 
+        });
+    });
+    return posts;
+
+};
+
 router.post('/', fileUpload.array("photos", 10), requireAuth, (req, res, next) => {
   processImages(req.files)
     .then((result) => {
@@ -69,20 +86,34 @@ router.post('/', fileUpload.array("photos", 10), requireAuth, (req, res, next) =
 
 });
 
-router.post('/all', (req, res, next) => {
-  Post.find({}, '_id title description createdAt bids photos._id')
+router.post('/all',requireAuth,  (req, res, next) => {
+  var lng = parseFloat(req.body.longitude);
+  var lat = parseFloat(req.body.latitude);
+  var maxDistance = parseFloat(req.body.maxDistance);
+
+  var point = {
+    type: "Point",
+    coordinates: [lng, lat]
+  };
+  var geoOptions = {
+    spherical: true,
+    maxDistance: maxDistance*1000,
+    num: 10
+  };
+
+  Post.geoNear(point, geoOptions)
     .then((posts) => {
-      res.payload = posts
+      res.payload = postsToModel(posts);
       next()
     })
     .catch(err => {
-      console.log(err.errors);
+      console.log(err.message);
       next(new Error(err));
     });
 });
 
 router.get('/photo/:id', (req, res, next) => {
-  Post.find({'photos._id':req.params['id'] }, {'photos.$': 1}, 'photos.data, photos._id')
+  Post.find({ 'photos._id': req.params['id'] }, { 'photos.$': 1 }, 'photos.data, photos._id')
     .then((posts) => {
       res.payload = posts[0].photos[0].data
       next()

@@ -56,7 +56,7 @@ const postSchema = mongoose.Schema({
     //geospatial index (https://docs.mongodb.com/manual/applications/geospatial-indexes/)
     loc: {
         type: [Number], // [longitude, latitude]
-        index: '2d',
+        index: '2dsphere',
     },
 
     address: {
