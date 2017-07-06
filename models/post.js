@@ -60,8 +60,7 @@ const postSchema = mongoose.Schema({
     },
 
     address: {
-        type: addressSchema,
-        required: true,
+        type: addressSchema
     },
 
     photos: [photoSchema],
