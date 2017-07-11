@@ -47,18 +47,18 @@ const processImages = (files) => {
 
 const postsToModel = (results) => {
   let posts = [];
-    results.forEach(function(doc) {
-        posts.push({
-            _id:  doc.obj._id,
-            title: doc.obj.title,
-            description: doc.obj.description,
-            createdAt: doc.obj.createdAt,
-            bids: doc.obj.bids,
-            photos: doc.obj.photos.map((photo)=>{return { _id: photo._id}}),
-            distance: parseInt(doc.dis/1000), 
-        });
+  results.forEach(function (doc) {
+    posts.push({
+      _id: doc._id,
+      title: doc.title,
+      description: doc.description,
+      createdAt: doc.createdAt,
+      bids: doc.bids,
+      photos: doc.photos.map((photo) => { return { _id: photo._id } }),
+      distance: parseInt(doc.dist / 1000) || 0,
     });
-    return posts;
+  });
+  return posts;
 
 };
 
@@ -86,26 +86,33 @@ router.post('/', fileUpload.array("photos", 10), requireAuth, (req, res, next) =
 
 });
 
-router.post('/all',requireAuth,  (req, res, next) => {
+router.post('/all', requireAuth, (req, res, next) => {
   var lng = parseFloat(req.body.longitude);
   var lat = parseFloat(req.body.latitude);
   var maxDistance = parseFloat(req.body.maxDistance);
+  var skip = parseInt(req.body.skip);
+  var take = parseInt(req.body.take);
 
-  var point = {
-    type: "Point",
-    coordinates: [lng, lat]
-  };
-  var geoOptions = {
-    spherical: true,
-    maxDistance: maxDistance*1000,
-    num: 10
-  };
-
-  Post.geoNear(point, geoOptions)
-    .then((posts) => {
-      res.payload = postsToModel(posts);
-      next()
-    })
+  Post.aggregate([
+    {
+      $geoNear: {
+        near: { type: "Point", coordinates: [lng, lat] },
+        distanceField: "dist",
+        maxDistance: (maxDistance * 1000),
+        spherical: true
+      },
+    },
+    {
+      '$skip': skip
+    },
+    {
+      '$limit': take
+    }
+  ]
+  ).then((posts) => {
+    res.payload = postsToModel(posts);
+    next()
+  })
     .catch(err => {
       console.log(err.message);
       next(new Error(err));

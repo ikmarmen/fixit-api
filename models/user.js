@@ -111,11 +111,13 @@ userSchema.methods.createToken = function (deviceId) {
       }
     }
     if (foundToken !== false) {
-      user.tokens[foundToken] = newToken;
+       user.tokens.splice(foundToken, 1);
     }
     else {
       user.tokens.push(newToken);
     }
+    
+    user.tokens.push(newToken);
 
     user.save((err) => {
       console.log('token update done', err);
