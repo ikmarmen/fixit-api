@@ -102,6 +102,7 @@ router.post('/all', requireAuth, (req, res, next) => {
         spherical: true
       },
     },
+    { '$sort': { createdAt: -1, dist: 1 } },
     {
       '$skip': skip
     },
