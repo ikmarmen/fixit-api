@@ -53,7 +53,7 @@ const postsToModel = (results) => {
       description: doc.description,
       createdAt: doc.createdAt,
       bids: doc.bids,
-      questions:  doc.questions,
+      questions: doc.questions,
       photos: doc.photos.map((photo) => { return { _id: photo._id } }),
       distance: parseInt(doc.dist / 1000) || 0,
     });
@@ -120,6 +120,20 @@ router.post('/all', requireAuth, (req, res, next) => {
     });
 });
 
+router.post('/my', requireAuth, (req, res, next) => {
+  var skip = parseInt(req.body.skip);
+  var take = parseInt(req.body.take);
+
+  Post.find({ userId: req.user._id }).then((posts) => {
+    res.payload = postsToModel(posts);
+    next()
+  })
+    .catch(err => {
+      console.log(err.message);
+      next(new Error(err));
+    });
+});
+
 router.get('/photo/:id', (req, res, next) => {
   Post.find({ 'photos._id': req.params['id'] }, { 'photos.$': 1 }, 'photos.data, photos._id')
     .then((posts) => {
@@ -161,7 +175,7 @@ router.post('/:id/questions', requireAuth, (req, res, next) => {
 
   Post.addQuestion(req.params['id'], commentData)
     .then((post) => {
-      res.payload = null;
+      res.payload = post.questions;
       next();
     })
     .catch(err => {
@@ -175,7 +189,7 @@ router.post('/:id/questions/:answerId/answer', requireAuth, (req, res, next) => 
 
   Post.addAnswer(req.params['id'], req.params['answerId'], answerData)
     .then(() => {
-      res.payload = null;
+      res.payload = {};
       next();
     })
     .catch(err => {
