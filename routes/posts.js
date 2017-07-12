@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const multer = require('multer');
 const Post = require('../models/post');
-const Comment = require('../models/comment');
 const async = require('async');
 const gm = require('gm');
 const requireAuth = require('../middlewares/require-auth');
@@ -54,6 +53,7 @@ const postsToModel = (results) => {
       description: doc.description,
       createdAt: doc.createdAt,
       bids: doc.bids,
+      questions:  doc.questions,
       photos: doc.photos.map((photo) => { return { _id: photo._id } }),
       distance: parseInt(doc.dist / 1000) || 0,
     });
@@ -147,7 +147,7 @@ router.get('/:id', requireAuth, (req, res, next) => {
 router.post('/:id/bid', requireAuth, (req, res, next) => {
   Post.addBid(req.params['id'], req.body)
     .then((post) => {
-      res.payload = post;
+      res.payload = null;
       next();
     })
     .catch(err => {
@@ -156,27 +156,27 @@ router.post('/:id/bid', requireAuth, (req, res, next) => {
     });
 });
 
-router.post('/:id/comment', requireAuth, (req, res, next) => {
+router.post('/:id/questions', requireAuth, (req, res, next) => {
   let commentData = Object.assign({}, req.body, { userId: req.user._id });
-  let comment = new Comment(commentData)
 
-  comment.save((err, result) => {
-    if (err) {
+  Post.addQuestion(req.params['id'], commentData)
+    .then((post) => {
+      res.payload = null;
+      next();
+    })
+    .catch(err => {
       console.log(err.errors);
       next(new Error(err));
-    }
-    else {
-      res.payload = result;
-      next();
-    }
-  });
+    });
 });
 
-router.get('/:id/comments', requireAuth, (req, res, next) => {
-  Comment.getComments(req.params['id'])
-    .then((comment) => {
-      res.payload = comment
-      next()
+router.post('/:id/questions/:answerId/answer', requireAuth, (req, res, next) => {
+  let answerData = Object.assign({}, req.body, { userId: req.user._id });
+
+  Post.addAnswer(req.params['id'], req.params['answerId'], answerData)
+    .then(() => {
+      res.payload = null;
+      next();
     })
     .catch(err => {
       console.log(err.errors);

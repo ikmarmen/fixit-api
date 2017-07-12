@@ -7,8 +7,5 @@ router.get('/', requireAuth, (req, res, next) => {
   };
   next();
 });
-
-
-
 module.exports = router;
 
