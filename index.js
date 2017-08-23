@@ -10,7 +10,7 @@ const locationImporter = require('./locationImporter');
 
 global.Promise = require('bluebird');
 mongoose.Promise = require('bluebird');
-mongoose.connect(config.mongoUrl);
+mongoose.connect(config.mongoUrl, { useMongoClient: true });
 mongoose.connection.on('error', () => console.error('connection error'));
 mongoose.connection.once('open', () => {
     apiReady();

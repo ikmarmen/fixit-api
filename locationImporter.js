@@ -4,7 +4,7 @@ const config = require('./config');
 
 const importLocations = function () {
     Location.find({}).sort('zip').limit(1).exec(function (err, locations) {
-        if (locations.length > 0) {
+        if (locations && locations.length > 0) {
             console.log("Location DB exist in current environment.");
         } else {
             console.log("Location DB doesn't exist in current environment. Starting location DB import from csv file...");
