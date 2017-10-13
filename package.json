@@ -19,6 +19,7 @@
   "homepage": "https://github.com/arsen/fixit-api#readme",
   "dependencies": {
     "async": "^2.4.1",
+    "qs": "^6.5.1",
     "bcrypt": "1.0.2",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",

@@ -3,6 +3,7 @@ const multer = require('multer');
 const Post = require('../models/post');
 const async = require('async');
 const gm = require('gm');
+const qs = require('qs');
 const requireAuth = require('../middlewares/require-auth');
 
 const fileUpload = multer();
@@ -87,29 +88,52 @@ router.post('/', fileUpload.array("photos", 10), requireAuth, (req, res, next) =
 });
 
 router.post('/all', requireAuth, (req, res, next) => {
-  var lng = parseFloat(req.body.longitude);
-  var lat = parseFloat(req.body.latitude);
-  var maxDistance = parseFloat(req.body.maxDistance);
-  var skip = parseInt(req.body.skip);
-  var take = parseInt(req.body.take);
+  var request = qs.parse(req.body);
 
-  Post.aggregate([
-    {
+  var aggregateArray = [];
+
+  //Search by distance
+  var lng = parseFloat(request.longitude);
+  var lat = parseFloat(request.latitude);
+  var maxDistance = parseFloat(request.maxDistance);
+  if (lng && lat && maxDistance!=null) {
+    aggregateArray.push({
       $geoNear: {
         near: { type: "Point", coordinates: [lng, lat] },
         distanceField: "dist",
         maxDistance: (maxDistance * 1000),
         spherical: true
       },
-    },
-    { '$sort': { createdAt: -1, dist: 1 } },
-    {
-      '$skip': skip
-    },
-    {
-      '$limit': take
+    });
+  }
+  //Search by search keyword
+  if (request.search) {
+    aggregateArray.push({ '$match': { '$title': { $search: "cake" } } });
+  }
+  //Order resault
+  if (request.order) {
+    var sort = {};
+    var direction = request.order.direction = 'desc' ? 1 : -1;
+    if (request.order.by == 'createdDate') {
+      sort.createdAt = direction;
+    } else if (request.order.by == 'createdDate') {
+      sort.distanse = direction;
+    } else {
+      sort = { createdAt: -1, dist: 1 };
     }
-  ]
+
+    aggregateArray.push({ '$sort': sort });
+  }
+  //Paging
+  var skip = parseInt(request.skip);
+  var take = parseInt(request.take);
+  if (skip!=null && take!=null) {
+
+    aggregateArray.push({ '$skip': skip });
+    aggregateArray.push({ '$limit': take });
+  }
+
+  Post.aggregate(aggregateArray
   ).then((posts) => {
     res.payload = postsToModel(posts);
     next()
