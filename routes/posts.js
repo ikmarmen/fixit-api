@@ -126,11 +126,11 @@ router.post('/all', requireAuth, (req, res, next) => {
   //Order resault
   if (request.order) {
     var sort = {};
-    var direction = request.order.direction = 'desc' ? 1 : -1;
+    var direction = request.order.direction == 'desc' ? 1 : -1;
     if (request.order.by == 'createdDate') {
       sort.createdAt = direction;
-    } else if (request.order.by == 'createdDate') {
-      sort.distanse = direction;
+    } else if (request.order.by == 'distanse') {
+      sort.dist = direction;
     } else {
       sort = { createdAt: -1, dist: 1 };
     }
