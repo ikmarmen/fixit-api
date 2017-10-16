@@ -53,6 +53,8 @@ const postsToModel = (results) => {
       title: doc.title,
       description: doc.description,
       createdAt: doc.createdAt,
+      viewsCount: '52',
+      createdBy: doc.createdBy && doc.createdBy.length ? (doc.createdBy[0].firstName +' '+ doc.createdBy[0].lastName) :'',
       bids: doc.bids,
       questions: doc.questions,
       photos: doc.photos.map((photo) => { return { _id: photo._id } }),
@@ -96,7 +98,7 @@ router.post('/all', requireAuth, (req, res, next) => {
   var lng = parseFloat(request.longitude);
   var lat = parseFloat(request.latitude);
   var maxDistance = parseFloat(request.maxDistance);
-  if (lng && lat && maxDistance!=null) {
+  if (lng && lat && maxDistance != null) {
     aggregateArray.push({
       $geoNear: {
         near: { type: "Point", coordinates: [lng, lat] },
@@ -106,9 +108,20 @@ router.post('/all', requireAuth, (req, res, next) => {
       },
     });
   }
+
+  aggregateArray.push({
+    $lookup:
+    {
+      from: "users",
+      localField: "userId",
+      foreignField: "_id",
+      as: "createdBy"
+    }
+  });
+
   //Search by search keyword
   if (request.search) {
-    aggregateArray.push({ '$match': { '$title': { $search: "cake" } } });
+    aggregateArray.push({ '$match': { 'title': { '$regex': request.search, $options: 'si' } } });
   }
   //Order resault
   if (request.order) {
@@ -127,8 +140,7 @@ router.post('/all', requireAuth, (req, res, next) => {
   //Paging
   var skip = parseInt(request.skip);
   var take = parseInt(request.take);
-  if (skip!=null && take!=null) {
-
+  if (skip != null && take != null) {
     aggregateArray.push({ '$skip': skip });
     aggregateArray.push({ '$limit': take });
   }
