@@ -26,14 +26,9 @@ const userSchema = mongoose.Schema({
     required: [true, 'Password is required']
   },
 
-  firstName: {
+  name: {
     type: String,
-    required: [true, 'First name is required'],
-  },
-
-  lastName: {
-    type: String,
-    required: [true, 'Last name is required'],
+    required: [true, 'Name is required'],
   },
 
   profilePic: Buffer,

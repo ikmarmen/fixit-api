@@ -54,7 +54,7 @@ const postsToModel = (results) => {
       description: doc.description,
       createdAt: doc.createdAt,
       viewsCount: '52',
-      createdBy: doc.createdBy && doc.createdBy.length ? (doc.createdBy[0].firstName +' '+ doc.createdBy[0].lastName) :'',
+      createdBy: doc.createdBy && doc.createdBy.length ? doc.createdBy[0].name :'',
       bids: doc.bids,
       questions: doc.questions,
       photos: doc.photos.map((photo) => { return { _id: photo._id } }),
