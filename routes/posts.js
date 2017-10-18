@@ -194,10 +194,12 @@ router.get('/:id', requireAuth, (req, res, next) => {
     });
 });
 
-router.post('/:id/bid', requireAuth, (req, res, next) => {
-  Post.addBid(req.params['id'], req.body)
+router.post('/:id/questions', requireAuth, (req, res, next) => {
+  let commentData = Object.assign({}, req.body, { userId: req.user._id });
+
+  Post.addQuestion(req.params['id'], commentData)
     .then((post) => {
-      res.payload = null;
+      res.payload = post.questions;
       next();
     })
     .catch(err => {
@@ -206,12 +208,13 @@ router.post('/:id/bid', requireAuth, (req, res, next) => {
     });
 });
 
-router.post('/:id/questions', requireAuth, (req, res, next) => {
-  let commentData = Object.assign({}, req.body, { userId: req.user._id });
+router.post('/:id/quote', requireAuth, (req, res, next) => {
+  let request = qs.parse(req.body);
+  let bid = Object.assign({}, request, { userId: req.user._id });
 
-  Post.addQuestion(req.params['id'], commentData)
+  Post.addBid(req.params['id'], bid)
     .then((post) => {
-      res.payload = post.questions;
+      res.payload = {success:true};
       next();
     })
     .catch(err => {

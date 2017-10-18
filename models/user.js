@@ -19,6 +19,15 @@ const userSchema = mongoose.Schema({
     },
     required: [true, 'Email address is required']
   },
+  phone: {
+    type: String,
+    validate: {
+      isAsync: false,
+      validator: (val) => validator.isMobilePhone(val),
+      message: '{VALUE} is not a valid phone number'
+    },
+  },
+
 
   password: {
     type: String,

@@ -7,14 +7,46 @@ const photoSchema = mongoose.Schema({
   width: Number,
   height: Number,
 });
-const bidSchema = mongoose.Schema({
-  price: {
+const contactSchema = mongoose.Schema({
+  contact: {
     type: String,
     required: true
   },
-  comment: {
+  type: {
+    type: String,
+    required: true
+  }
+});
+const answerSchema = mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
+  body: {
+    type: String,
+    index: true,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: new Date(),
+  }
+});
+const bidSchema = mongoose.Schema({
+  amount: {
+    type: [Number],
+    required: true
+  },
+  duration: {
+    type: [Number],
+    required: true
+  },
+  message: {
     type: String,
   },
+  contacts: [contactSchema],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -37,23 +69,6 @@ const addressSchema = mongoose.Schema({
   state: String,
   country: String,
   zip: Number,
-});
-const answerSchema = mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User'
-  },
-  body: {
-    type: String,
-    index: true,
-    required: true
-  },
-  createdAt: {
-    type: Date,
-    required: true,
-    default: new Date(),
-  }
 });
 const questionSchema = mongoose.Schema({
   userId: {
@@ -132,7 +147,8 @@ postSchema.statics.findByid = function (id) {
 postSchema.statics.addBid = function (postId, bid) {
   return this.findById(postId)
     .then((post) => {
-      post.bids.push(new Bid(bid));
+      let bidSchema = new Bid(bid);
+      post.bids.push(bidSchema);
       return post.save();
     })
 };
@@ -149,7 +165,7 @@ postSchema.statics.addAnswer = function (postId, questionId, answer) {
   return this.update(
     { "_id": postId, "questions._id": questionId },
     { "questions.$.answer": new Answer(answer) }
-  ).then((post)=>{
+  ).then((post) => {
     return;
   })
 
