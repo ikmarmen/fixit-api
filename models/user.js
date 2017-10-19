@@ -23,7 +23,9 @@ const userSchema = mongoose.Schema({
     type: String,
     validate: {
       isAsync: false,
-      validator: (val) => validator.isMobilePhone(val),
+      validator: (val) =>{ 
+        return validator.isMobilePhone(val, 'en-US')
+      },
       message: '{VALUE} is not a valid phone number'
     },
   },
@@ -92,7 +94,7 @@ userSchema.methods.comparePassword = function (candidatePassword) {
   let user = this;
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidatePassword, this.password, (err, ok) => {
-      ok ? resolve() : reject();
+      ok ? resolve(user) : reject(new Error("Wrong password."));
     });
   });
 };
@@ -164,7 +166,7 @@ userSchema.statics.login = function (email, password, deviceId) {
       }
     });
 };
-userSchema.statics.logauth = function (token) {
+userSchema.statics.logout = function (token) {
   return this.findOne({ tokens: token })
     .then((user) => {
       if (user) {

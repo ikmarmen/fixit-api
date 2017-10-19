@@ -66,14 +66,40 @@ router.post('/save', requireAuth, (req, res, next) => {
 
 });
 
-//logauth
-router.post('/logauth', requireAuth, (req, res, next) => {
-  User.logauth(req.body.token)
-    .then((isLogAuthed) => {
-      return isLogAuthed;
+//Change password
+router.post('/changePassword', requireAuth, (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (user) {
+        return user.comparePassword(req.body.oldPassword);
+      }
+      else {
+        next(new Error("User does not exist"));
+      }
     })
-    .then((isLogAuthed) => {
-      res.payload = isLogAuthed;
+    .then((user) => {
+      user.password = req.body.newPassword;
+      return user.save();
+    })
+    .then((user) => {
+      res.payload = user;
+      next();
+    })
+    .catch(err => {
+      console.log(err.errors);
+      next(new Error(err));
+    });
+
+});
+
+//logout
+router.post('/logout', requireAuth, (req, res, next) => {
+  User.logout(req.body.token)
+    .then((isLogouted) => {
+      return isLogouted;
+    })
+    .then((isLogouted) => {
+      res.payload = isLogouted;
       next();
     })
     .catch(err => {
