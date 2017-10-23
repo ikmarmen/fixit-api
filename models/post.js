@@ -103,6 +103,10 @@ const postSchema = mongoose.Schema({
     index: true,
     maxlength: 500,
   },
+  status: {
+    type: String,
+    required: [true, 'Post status is required']
+  },
   //geospatial index (https://docs.mongodb.com/manual/applications/geospatial-indexes/)
   loc: {
     type: [Number], // [longitude, latitude]

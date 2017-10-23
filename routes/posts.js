@@ -54,11 +54,12 @@ const postsToModel = (results) => {
       description: doc.description,
       createdAt: doc.createdAt,
       viewsCount: '52',
-      createdBy: doc.createdBy && doc.createdBy.length ? doc.createdBy[0].name :'',
+      createdBy: doc.createdBy && doc.createdBy.length ? doc.createdBy[0].name : '',
       bids: doc.bids,
       questions: doc.questions,
       photos: doc.photos.map((photo) => { return { _id: photo._id } }),
       distance: parseInt(doc.dist / 1000) || 0,
+      status: doc.status,
     });
   });
   return posts;
@@ -69,6 +70,7 @@ router.post('/', fileUpload.array("photos", 10), requireAuth, (req, res, next) =
   processImages(req.files)
     .then((result) => {
       let postData = Object.assign({}, req.body, { userId: req.user._id, photos: result });
+      postData.status = 'new';
       let post = new Post(postData)
 
       post.save((err, result) => {
@@ -157,10 +159,51 @@ router.post('/all', requireAuth, (req, res, next) => {
 });
 
 router.post('/my', requireAuth, (req, res, next) => {
-  var skip = parseInt(req.body.skip);
-  var take = parseInt(req.body.take);
+  var request = qs.parse(req.body);
 
-  Post.find({ userId: req.user._id }).then((posts) => {
+  var aggregateArray = [];
+  var matchArray=[
+    {'userId':{'$eq': req.user._id}}
+  ]
+  aggregateArray.push({
+    $lookup:
+    {
+      from: "users",
+      localField: "userId",
+      foreignField: "_id",
+      as: "createdBy"
+    }
+  });
+
+  //Search by search keyword
+  if (request.search) {
+    matchArray.push({ 'title': { '$regex': request.search, $options: 'si' } })
+  }
+  aggregateArray.push({ '$match': { '$and': matchArray} });
+  //Order resault
+  if (request.order) {
+    var sort = {};
+    var direction = request.order.direction == 'desc' ? 1 : -1;
+    if (request.order.by == 'createdDate') {
+      sort.createdAt = direction;
+    } else if (request.order.by == 'distanse') {
+      sort.dist = direction;
+    } else {
+      sort = { createdAt: -1, dist: 1 };
+    }
+
+    aggregateArray.push({ '$sort': sort });
+  }
+  //Paging
+  var skip = parseInt(request.skip);
+  var take = parseInt(request.take);
+  if (skip != null && take != null) {
+    aggregateArray.push({ '$skip': skip });
+    aggregateArray.push({ '$limit': take });
+  }
+
+  Post.aggregate(aggregateArray
+  ).then((posts) => {
     res.payload = postsToModel(posts);
     next()
   })
@@ -214,7 +257,7 @@ router.post('/:id/quote', requireAuth, (req, res, next) => {
 
   Post.addBid(req.params['id'], bid)
     .then((post) => {
-      res.payload = {success:true};
+      res.payload = { success: true };
       next();
     })
     .catch(err => {
