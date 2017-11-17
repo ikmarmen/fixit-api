@@ -6,7 +6,7 @@ const photoSchema = mongoose.Schema({
   data: Buffer,
   width: Number,
   height: Number,
-});
+}, { usePushEach: true });
 const contactSchema = mongoose.Schema({
   contact: {
     type: String,
@@ -16,7 +16,7 @@ const contactSchema = mongoose.Schema({
     type: String,
     required: true
   }
-});
+}, { usePushEach: true });
 const answerSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -33,7 +33,7 @@ const answerSchema = mongoose.Schema({
     required: true,
     default: new Date(),
   }
-});
+}, { usePushEach: true });
 const bidSchema = mongoose.Schema({
   amount: {
     type: [Number],
@@ -62,14 +62,14 @@ const bidSchema = mongoose.Schema({
     required: true,
     default: new Date(),
   }
-});
+}, { usePushEach: true });
 const addressSchema = mongoose.Schema({
   street: String,
   city: String,
   state: String,
   country: String,
   zip: Number,
-});
+}, { usePushEach: true });
 const questionSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -89,7 +89,7 @@ const questionSchema = mongoose.Schema({
     required: true,
     default: new Date(),
   }
-});
+}, { usePushEach: true });
 const postSchema = mongoose.Schema({
   title: {
     type: String,
@@ -133,7 +133,7 @@ const postSchema = mongoose.Schema({
     required: true,
     default: new Date(),
   }
-});
+}, { usePushEach: true });
 
 var Address = mongoose.model('Address', addressSchema, 'addresses');
 var Photo = mongoose.model('Photo', photoSchema, 'photos');

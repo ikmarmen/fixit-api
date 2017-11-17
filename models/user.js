@@ -66,7 +66,7 @@ const userSchema = mongoose.Schema({
     required: true,
     default: new Date(),
   },
-});
+}, { usePushEach: true });
 
 userSchema.pre('save', function (next) {
   let user = this;

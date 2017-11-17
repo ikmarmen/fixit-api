@@ -26,6 +26,6 @@ const locationSchema = mongoose.Schema({
         index: '2d',
         required: [true, 'Location is required'],
     },
-});
+}, { usePushEach: true });
 
 module.exports = mongoose.model('Location', locationSchema, 'locations'); 

@@ -35,7 +35,7 @@ const processImages = (files) => {
     }
     //run in parallel
     async.parallel(jobs, (err, result) => {
-      err ? reject() : resolve(result);
+      err ? reject(err) : resolve(result);
     });
     //runs in series (each job will wait until the previews one is done)
     // async.series(jobs, (err) => {
@@ -72,6 +72,7 @@ router.post('/', fileUpload.array("photos", 10), requireAuth, (req, res, next) =
       let postData = Object.assign({}, req.body, { userId: req.user._id, photos: result });
       postData.status = 'new';
       let post = new Post(postData)
+      console.log("Start post saving.");
 
       post.save((err, result) => {
         if (err) {
