@@ -31,7 +31,7 @@ const answerSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: Date.now,
   }
 }, { usePushEach: true });
 const bidSchema = mongoose.Schema({
@@ -55,12 +55,12 @@ const bidSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: Date.now,
   }
 }, { usePushEach: true });
 const addressSchema = mongoose.Schema({
@@ -87,7 +87,7 @@ const questionSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: Date.now,
   }
 }, { usePushEach: true });
 const postSchema = mongoose.Schema({
@@ -126,12 +126,12 @@ const postSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: Date.now,
   }
 }, { usePushEach: true });
 

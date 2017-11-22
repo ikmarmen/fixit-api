@@ -58,13 +58,13 @@ const userSchema = mongoose.Schema({
   lastActiveAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: Date.now,
   },
 
   registeredAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: Date.now,
   },
 }, { usePushEach: true });
 
