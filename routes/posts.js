@@ -267,10 +267,10 @@ router.post('/:id/quote', requireAuth, (req, res, next) => {
     });
 });
 
-router.post('/:id/questions/:answerId/answer', requireAuth, (req, res, next) => {
+router.post('/:id/questions/:questionId/answer', requireAuth, (req, res, next) => {
   let answerData = Object.assign({}, req.body, { userId: req.user._id });
 
-  Post.addAnswer(req.params['id'], req.params['answerId'], answerData)
+  Post.addAnswer(req.params['id'], req.params['questionId'], answerData)
     .then(() => {
       res.payload = {};
       next();

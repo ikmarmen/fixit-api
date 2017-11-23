@@ -23,6 +23,10 @@ const answerSchema = mongoose.Schema({
     required: true,
     ref: 'User'
   },
+  isPublic:{
+    type: Boolean,
+    default: true,
+  },
   body: {
     type: String,
     index: true,
