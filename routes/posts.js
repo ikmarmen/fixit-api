@@ -45,27 +45,6 @@ const processImages = (files) => {
 
 };
 
-const postsToModel = (results) => {
-  let posts = [];
-  results.forEach(function (doc) {
-    posts.push({
-      _id: doc._id,
-      title: doc.title,
-      description: doc.description,
-      createdAt: doc.createdAt,
-      viewsCount: '52',
-      createdBy: doc.createdBy && doc.createdBy.length ? doc.createdBy[0].name : '',
-      bids: doc.bids,
-      questions: doc.questions,
-      photos: doc.photos.map((photo) => { return { _id: photo._id } }),
-      distance: parseInt(doc.dist / 1000) || 0,
-      status: doc.status,
-    });
-  });
-  return posts;
-
-};
-
 router.post('/', fileUpload.array("photos", 10), requireAuth, (req, res, next) => {
   processImages(req.files)
     .then((result) => {
@@ -96,6 +75,10 @@ router.post('/all', requireAuth, (req, res, next) => {
   var request = qs.parse(req.body);
 
   var aggregateArray = [];
+  var matchArray = [];
+  if (request.forRequester) {
+    matchArray.push({ 'userId': { '$eq': req.user._id } });
+  }
 
   //Search by distance
   var lng = parseFloat(request.longitude);
@@ -112,75 +95,98 @@ router.post('/all', requireAuth, (req, res, next) => {
     });
   }
 
-  aggregateArray.push({
-    $lookup:
+  aggregateArray.push(
     {
-      from: "users",
-      localField: "userId",
-      foreignField: "_id",
-      as: "createdBy"
-    }
-  });
-
-  //Search by search keyword
-  if (request.search) {
-    aggregateArray.push({ '$match': { 'title': { '$regex': request.search, $options: 'si' } } });
-  }
-  //Order resault
-  if (request.order) {
-    var sort = {};
-    var direction = request.order.direction == 'desc' ? 1 : -1;
-    if (request.order.by == 'createdDate') {
-      sort.createdAt = direction;
-    } else if (request.order.by == 'distanse') {
-      sort.dist = direction;
-    } else {
-      sort = { createdAt: -1, dist: 1 };
-    }
-
-    aggregateArray.push({ '$sort': sort });
-  }
-  //Paging
-  var skip = parseInt(request.skip);
-  var take = parseInt(request.take);
-  if (skip != null && take != null) {
-    aggregateArray.push({ '$skip': skip });
-    aggregateArray.push({ '$limit': take });
-  }
-
-  Post.aggregate(aggregateArray
-  ).then((posts) => {
-    res.payload = postsToModel(posts);
-    next()
-  })
-    .catch(err => {
-      console.log(err.message);
-      next(new Error(err));
-    });
-});
-
-router.post('/my', requireAuth, (req, res, next) => {
-  var request = qs.parse(req.body);
-
-  var aggregateArray = [];
-  var matchArray=[
-    {'userId':{'$eq': req.user._id}}
-  ]
-  aggregateArray.push({
-    $lookup:
+      $unwind: {
+        path: "$questions",
+        preserveNullAndEmptyArrays: true
+      }
+    },
     {
-      from: "users",
-      localField: "userId",
-      foreignField: "_id",
-      as: "createdBy"
+      $unwind: {
+        path: "$bids",
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $lookup:
+        {
+          from: "users",
+          localField: "questions.userId",
+          foreignField: "_id",
+          as: "questions.createdBy"
+        }
+    },
+    {
+      $lookup:
+        {
+          from: "users",
+          localField: "bids.userId",
+          foreignField: "_id",
+          as: "bids.createdBy"
+        }
+    },
+    {
+      $lookup:
+        {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "createdBy"
+        }
+    },
+    {
+      $unwind: "$createdBy"
+    },
+    {
+      $unwind: "$photos"
+    },
+    {
+      $group: {
+        "_id": "$_id",
+        "title": { "$first": "$title" },
+        "description": { "$first": "$description" },
+        "createdAt": { "$first": "$createdAt" },
+        "viewsCount": { "$first": "$viewsCount" },
+        "userId": { "$first": "$userId" },
+        "createdBy": { "$first": "$createdBy.name" },
+        "photos": { "$push": { "_id": "$photos._id" } },
+        "distance": { "$first": "$dist" },
+        "status": { "$first": "$status" },
+        "viewsCount": { "$first": "52" },
+        "questions": {
+          "$push": {
+            "_id": "$questions._id",
+            "body": "$questions.body",
+            "createdAt": "$questions.createdAt",
+            "answer": "$questions.answer",
+            "createdBy": { "$arrayElemAt": ["$questions.createdBy.name", 0] }
+          }
+        },
+        "bids": {
+          "$push": {
+            "_id": "$bids._id",
+            "message": "$bids.message",
+            "updatedAt": "$bids.updatedAt",
+            "createdAt": "$bids.createdAt",
+            "contacts": "$bids.contacts",
+            "duration": "$bids.duration",
+            "amount": "$bids.amount",
+            "createdBy": { "$arrayElemAt": ["$bids.createdBy.name", 0] }
+          }
+        }
+      }
     }
-  });
+  );
 
   //Search by search keyword
   if (request.search) {
     matchArray.push({ 'title': { '$regex': request.search, $options: 'si' } })
+    //aggregateArray.push({ '$match': { 'title': { '$regex': request.search, $options: 'si' } } });
   }
-  aggregateArray.push({ '$match': { '$and': matchArray} });
+  if (matchArray.length > 0) {
+    aggregateArray.push({ '$match': { '$and': matchArray } });
+  }
   //Order resault
   if (request.order) {
     var sort = {};
@@ -188,7 +194,7 @@ router.post('/my', requireAuth, (req, res, next) => {
     if (request.order.by == 'createdDate') {
       sort.createdAt = direction;
     } else if (request.order.by == 'distanse') {
-      sort.dist = direction;
+      sort.distance = direction;
     } else {
       sort = { createdAt: -1, dist: 1 };
     }
@@ -203,9 +209,17 @@ router.post('/my', requireAuth, (req, res, next) => {
     aggregateArray.push({ '$limit': take });
   }
 
-  Post.aggregate(aggregateArray
-  ).then((posts) => {
-    res.payload = postsToModel(posts);
+  Post.aggregate(aggregateArray).then((posts) => {
+    //Ugly hack, for excluding aggregation result empty objects
+    posts.map((post, index, array) => {
+      if (!post.questions[0]._id) {
+        array[index].questions = [];
+      }
+      if (!post.bids[0]._id) {
+        array[index].bids = [];
+      }
+    })
+    res.payload = posts;
     next()
   })
     .catch(err => {
