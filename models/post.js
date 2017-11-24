@@ -136,6 +136,11 @@ const postSchema = mongoose.Schema({
     type: Date,
     required: true,
     default: Date.now,
+  },
+  viewsCount:{
+    type: Number,
+    required: true,
+    default: 0,
   }
 }, { usePushEach: true });
 

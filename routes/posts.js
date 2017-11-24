@@ -228,6 +228,102 @@ router.post('/all', requireAuth, (req, res, next) => {
     });
 });
 
+router.post('/allNew', requireAuth, (req, res, next) => {
+  var request = qs.parse(req.body);
+
+  var aggregateArray = [];
+  var matchArray = [];
+  if (request.forRequester) {
+    matchArray.push({ 'userId': { '$eq': req.user._id } });
+  }
+
+  //Search by distance
+  var lng = parseFloat(request.longitude);
+  var lat = parseFloat(request.latitude);
+  var maxDistance = parseFloat(request.maxDistance);
+  if (lng && lat && maxDistance != null) {
+    aggregateArray.push({
+      $geoNear: {
+        near: { type: "Point", coordinates: [lng, lat] },
+        distanceField: "dist",
+        maxDistance: (maxDistance * 1000),
+        spherical: true
+      },
+    });
+  }
+
+  aggregateArray.push(
+    {
+      $lookup:
+        {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "createdBy"
+        }
+    },
+    {
+      $unwind: "$createdBy"
+    },
+    {
+      $project: {
+        _id: 1,
+        title: 1,
+        description: 1,
+        distance: "$dist" ,
+        userId: 1,
+        userName: "$createdBy.name",  
+        status: 1 ,
+        updatedAt: 1 ,
+        createdAt: 1 ,
+        viewsCount: 1 ,
+        photos: "$photos._id",
+        questionsCount: {$size: "$questions"},
+        bidsCount: {$size: "$bids"}
+      }
+    }
+  );
+
+  //Search by search keyword
+  if (request.search) {
+    matchArray.push({ 'title': { '$regex': request.search, $options: 'si' } })
+    //aggregateArray.push({ '$match': { 'title': { '$regex': request.search, $options: 'si' } } });
+  }
+  if (matchArray.length > 0) {
+    aggregateArray.push({ '$match': { '$and': matchArray } });
+  }
+  //Order resault
+  if (request.order) {
+    var sort = {};
+    var direction = request.order.direction == 'desc' ? 1 : -1;
+    if (request.order.by == 'createdDate') {
+      sort.createdAt = direction;
+    } else if (request.order.by == 'distanse') {
+      sort.distance = direction;
+    } else {
+      sort = { createdAt: -1, dist: 1 };
+    }
+
+    aggregateArray.push({ '$sort': sort });
+  }
+  //Paging
+  var skip = parseInt(request.skip);
+  var take = parseInt(request.take);
+  if (skip != null && take != null) {
+    aggregateArray.push({ '$skip': skip });
+    aggregateArray.push({ '$limit': take });
+  }
+
+  Post.aggregate(aggregateArray).then((posts) => {
+    res.payload = posts;
+    next()
+  })
+    .catch(err => {
+      console.log(err.message);
+      next(new Error(err));
+    });
+});
+
 router.get('/photo/:id', (req, res, next) => {
   Post.find({ 'photos._id': req.params['id'] }, { 'photos.$': 1 }, 'photos.data, photos._id')
     .then((posts) => {
