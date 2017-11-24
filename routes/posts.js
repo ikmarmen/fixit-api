@@ -277,7 +277,7 @@ router.post('/allNew', requireAuth, (req, res, next) => {
         updatedAt: 1 ,
         createdAt: 1 ,
         viewsCount: 1 ,
-        photos: "$photos._id",
+        photoIds: "$photos._id",
         questionsCount: {$size: "$questions"},
         bidsCount: {$size: "$bids"}
       }
@@ -298,7 +298,7 @@ router.post('/allNew', requireAuth, (req, res, next) => {
     var direction = request.order.direction == 'desc' ? 1 : -1;
     if (request.order.by == 'createdDate') {
       sort.createdAt = direction;
-    } else if (request.order.by == 'distanse') {
+    } else if (request.order.by == 'distance') {
       sort.distance = direction;
     } else {
       sort = { createdAt: -1, dist: 1 };
