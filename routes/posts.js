@@ -52,6 +52,9 @@ const loadAll = async (request) => {
   if (request.forRequester) {
     matchArray.push({ 'userId': { '$eq': request.userId } });
   }
+  if (request.exceptRequester) {
+    matchArray.push({ 'userId': { '$ne': request.userId } });
+  }
 
   //Search by distance
   var lng = parseFloat(request.longitude);
