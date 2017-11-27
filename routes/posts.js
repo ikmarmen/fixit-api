@@ -270,16 +270,16 @@ router.post('/allNew', requireAuth, (req, res, next) => {
         _id: 1,
         title: 1,
         description: 1,
-        distance: "$dist" ,
+        distance: "$dist",
         userId: 1,
-        userName: "$createdBy.name",  
-        status: 1 ,
-        updatedAt: 1 ,
-        createdAt: 1 ,
-        viewsCount: 1 ,
+        userName: "$createdBy.name",
+        status: 1,
+        updatedAt: 1,
+        createdAt: 1,
+        viewsCount: 1,
         photoIds: "$photos._id",
-        questionsCount: {$size: "$questions"},
-        bidsCount: {$size: "$bids"}
+        questionsCount: { $size: "$questions" },
+        bidsCount: { $size: "$bids" }
       }
     }
   );
@@ -354,6 +354,20 @@ router.post('/:id/questions', requireAuth, (req, res, next) => {
   Post.addQuestion(req.params['id'], commentData)
     .then((post) => {
       res.payload = post.questions;
+      next();
+    })
+    .catch(err => {
+      console.log(err.errors);
+      next(new Error(err));
+    });
+});
+
+router.post('/:id/questions/all', requireAuth, (req, res, next) => {
+  let commentData = Object.assign({}, req.body, { userId: req.user._id });
+
+  Post.findOne({ _id: req.params['id'] }).select({ questions: 1 })
+    .then((data) => {
+      res.payload = data.questions;
       next();
     })
     .catch(err => {
