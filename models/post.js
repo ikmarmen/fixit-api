@@ -17,22 +17,31 @@ const contactSchema = mongoose.Schema({
     required: true
   }
 }, { usePushEach: true });
-const answerSchema = mongoose.Schema({
+
+const acceptSchema = mongoose.Schema({
+  amount: {
+    type: [Number],
+    required: true
+  },
+  duration: {
+    type: [Number],
+    required: true
+  },
+  message: {
+    type: String,
+  },
+  contacts: [contactSchema],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'User'
   },
-  isPublic:{
-    type: Boolean,
-    default: true,
-  },
-  body: {
-    type: String,
-    index: true,
-    required: true
-  },
   createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  updatedAt: {
     type: Date,
     required: true,
     default: Date.now,
@@ -65,6 +74,32 @@ const bidSchema = mongoose.Schema({
     type: Date,
     required: true,
     default: Date.now,
+  },
+  accept:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Accept'
+  }
+}, { usePushEach: true });
+
+const answerSchema = mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
+  isPublic:{
+    type: Boolean,
+    default: true,
+  },
+  body: {
+    type: String,
+    index: true,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
   }
 }, { usePushEach: true });
 const addressSchema = mongoose.Schema({
@@ -75,14 +110,8 @@ const addressSchema = mongoose.Schema({
   zip: Number,
 }, { usePushEach: true });
 const questionSchema = mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User'
-  },
   body: {
     type: String,
-    index: true,
     required: true
   },
   answer: {
@@ -92,6 +121,11 @@ const questionSchema = mongoose.Schema({
     type: Date,
     required: true,
     default: Date.now,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
   }
 }, { usePushEach: true });
 const postSchema = mongoose.Schema({
@@ -121,7 +155,10 @@ const postSchema = mongoose.Schema({
   },
   questions: [questionSchema],
   photos: [photoSchema],
-  bids: [bidSchema],
+  bids: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Bid'
+  }],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -146,6 +183,7 @@ const postSchema = mongoose.Schema({
 
 var Address = mongoose.model('Address', addressSchema, 'addresses');
 var Photo = mongoose.model('Photo', photoSchema, 'photos');
+var Accept = mongoose.model('Accept', acceptSchema, 'accepts');
 var Bid = mongoose.model('Bid', bidSchema, 'bids');
 var Question = mongoose.model('Question', questionSchema, 'questions');
 var Answer = mongoose.model('Answer', answerSchema, 'answers');

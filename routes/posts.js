@@ -97,9 +97,9 @@ const search = async request => {
     updatedAt: 1,
     createdAt: 1,
     viewsCount: 1,
+    dis: 1,
     "photos._id": 1,
-    "questions._id": 1,
-    "bids._id": 1
+    "questions._id": 1
   });
 
   //Paging
@@ -139,9 +139,7 @@ const search = async request => {
   posts = posts.map(p => {
     let post = p.toObject();
     post.userName = users.find(u => u.id === post.userId.toString()).name;
-    post.bidsCount = post.bids.length;
     post.questionsCount = post.questions.length;
-    post.bids = null;
     post.questions = null;
 
     return post;
@@ -150,11 +148,7 @@ const search = async request => {
   return posts;
 };
 
-router.post(
-  "/",
-  fileUpload.array("photos", 10),
-  requireAuth,
-  (req, res, next) => {
+router.post("/", fileUpload.array("photos", 10), requireAuth, (req, res, next) => {
     processImages(req.files)
       .then(result => {
         let postData = Object.assign({}, req.body, {
@@ -216,13 +210,16 @@ router.get("/photo/:id", (req, res, next) => {
 });
 
 router.get("/:id", requireAuth, (req, res, next) => {
-  Post.findById(req.params["id"])
-    .then(post => {
-      res.payload = post;
+  search({id:req.params["id"]})
+    .then(posts => {
+      if(!posts || posts.length<=0){
+        throw new Error("Post not exist.");
+      }
+      res.payload = posts;
       next();
     })
     .catch(err => {
-      console.log(err.errors);
+      console.log(err.message);
       next(new Error(err));
     });
 });
@@ -254,8 +251,7 @@ router.post("/:id/questions/all", requireAuth, (req, res, next) => {
     });
 });
 
-router.post(
-  "/:id/questions/:questionId/answer",
+router.post("/:id/questions/:questionId/answer",
   requireAuth,
   (req, res, next) => {
     let answerData = Object.assign({}, req.body, { userId: req.user._id });
