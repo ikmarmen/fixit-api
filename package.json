@@ -27,7 +27,7 @@
     "extend": "^3.0.1",
     "gm": "^1.23.0",
     "jsonwebtoken": "^7.4.1",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.21",
     "mongoose": "^4.13.3",
     "mongoose-unique-validator": "^1.0.6",
     "morgan": "^1.8.1",
